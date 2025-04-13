@@ -1,0 +1,189 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:animate_do/animate_do.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
+import 'models/category_model.dart';
+import 'weather_service.dart';
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final List<Map<String, String>> _messages = [];
+  List<CategoryModel> _categories = [];
+  int _expandedCategoryIndex = -1;
+  final WeatherService _weatherService = WeatherService();
+  String _weatherInfo = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadQuestionsAndAnswers();
+  }
+
+  Future<void> _loadQuestionsAndAnswers() async {
+    String data = await rootBundle.loadString('assets/questions_data.json');
+    Map<String, dynamic> jsonData = json.decode(data);
+    setState(() {
+      _categories = (jsonData['categories'] as List)
+          .map((item) => CategoryModel.fromJson(item))
+          .toList();
+    });
+  }
+
+  void _handleQuestionTap(String question, String answer) {
+    setState(() {
+      _messages.add({'user': question});
+    });
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _messages.add({'bot': answer});
+      });
+    });
+  }
+
+  void _getWeather() async {
+    final weatherData = await _weatherService.fetchWeather();
+    if (weatherData != null) {
+      String weatherDescription = weatherData['weather'][0]['description'];
+      String temperature = "${weatherData['main']['temp']}°C";
+      String recommendation = weatherData['main']['temp'] > 30
+          ? "الطقس حار، تأكد من شرب الماء الكافي."
+          : "الطقس بارد، ارتدِ ملابس دافئة.";
+      _showWeatherDialog(weatherDescription, temperature, recommendation);
+    }
+  }
+
+  void _showWeatherDialog(String description, String temp, String recommendation) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("حالة الطقس"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("$description, $temp", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              SizedBox(height: 10),
+              Text("توصيات للسفر:", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(recommendation, textAlign: TextAlign.center),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("إغلاق"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("دردشة المرور"),
+        backgroundColor: Colors.blue,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.cloud),
+            onPressed: _getWeather,
+          ),
+        ],
+      ),
+      backgroundColor: Colors.grey[200],
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                final isUser = message.keys.first == 'user';
+                return FadeInUp(
+                  child: Align(
+                    alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: isUser ? Colors.blueAccent : Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        message.values.first,
+                        style: TextStyle(
+                          color: isUser ? Colors.white : Colors.black87,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _categories.map((category) {
+                return Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: ExpansionTile(
+                    backgroundColor: Colors.white,
+                    title: Text(
+                      category.categoryName,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    children: category.questions.map((question) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: ElevatedButton(
+                          onPressed: () => _handleQuestionTap(question.question, question.answer),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          ),
+                          child: Text(
+                            question.question,
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
