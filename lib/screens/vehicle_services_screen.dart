@@ -1,4 +1,6 @@
+import 'package:chatbot/screens/car_inspection.dart';
 import 'package:chatbot/screens/license_renewal_screen.dart';
+import 'package:chatbot/screens/owner_ship_transfer.dart';
 import 'package:flutter/material.dart';
 
 class VehicleServicesScreen extends StatelessWidget {
@@ -171,6 +173,18 @@ class VehicleServicesScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LicenseRenewalScreen()),
+      );
+    } else if (service['title'] == 'نقل ملكية السيارة') {
+      // Navigate to ownership transfer screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OwnershipTransferScreen()),
+      );
+    } else if (service['title'] == 'فحص السيارة') {
+      // Navigate to car inspection screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CarInspectionScreen()),
       );
     } else {
       showDialog(

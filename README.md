@@ -1,49 +1,37 @@
-# Chatbot App
+# تطبيق خدمات المرور
 
-A Flutter-based chatbot application with a modern UI and comprehensive profile management system.
+تطبيق متكامل لخدمات المرور يشمل:
+- الاستعلام عن المخالفات والدفع
+- خدمات المركبات
+- تقارير الحوادث
+- الخدمات المرورية
+- الضرائب والرسوم
+- حجز المواعيد
+- مساعد ذكي للإجابة عن الاستفسارات
 
-## Features
+## المميزات
+- واجهة مستخدم سهلة وجذابة
+- دعم كامل للغة العربية
+- خدمات متكاملة في مكان واحد
+- مساعد ذكي للمساعدة
+- دفع إلكتروني آمن
+- تتبع حالة الطلبات
+- إشعارات فورية
 
-- User profile management
-- Document upload functionality
-- Settings management
-- Modern and responsive UI
-- RTL support
-- Animated UI elements
+## المتطلبات
+- Flutter (2.5.0 أو أحدث)
+- Dart (2.14.0 أو أحدث)
 
-## Getting Started
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/chatbot.git
-```
-
-2. Install dependencies
+## التثبيت
 ```bash
 flutter pub get
-```
-
-3. Run the app
-```bash
 flutter run
 ```
 
-## Requirements
-
-- Flutter (Latest Version)
-- Dart SDK (Latest Version)
-- Android Studio / VS Code
-- Android SDK / Xcode (for iOS)
-
-## Dependencies
-
-- animate_do: For animations
-- flutter: SDK
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+## الإسهام في التطوير
+نرحب بمساهماتكم! يرجى اتباع الخطوات التالية:
+1. عمل Fork للمشروع
+2. إنشاء فرع جديد للميزة (`git checkout -b feature/amazing-feature`)
+3. عمل Commit للتغييرات (`git commit -m 'إضافة ميزة جديدة'`)
+4. رفع التغييرات (`git push origin feature/amazing-feature`)
+5. فتح طلب Pull Request

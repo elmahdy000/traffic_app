@@ -1,13 +1,17 @@
+import 'package:chatbot/screens/accident_report.dart';
+import 'package:chatbot/screens/gpt_screen.dart';
+import 'package:chatbot/screens/traffic_queries.dart';
+import 'package:chatbot/screens/trafic_sercices.dart';
+import 'package:chatbot/services/chatgpt_service.dart';
+// Remove or comment out the conflicting import
+// import 'package:chatbot/screens/trafic_sercices.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/screens/chat_screen2.dart';
-import 'package:chatbot/screens/gpt_screen.dart';
 import 'package:chatbot/screens/special_licence.dart';
 import 'package:chatbot/screens/booking_screen.dart';
 import 'package:chatbot/screens/penalities_screen.dart';
 import 'package:chatbot/screens/traffic_violation_screen.dart';
 import 'package:chatbot/screens/annual_tax_screen.dart';
-import 'package:chatbot/screens/chat_screen.dart';
-import 'package:chatbot/screens/electronic_service_screen.dart';
 import 'package:chatbot/screens/licence_screen.dart';
 import 'package:chatbot/screens/vehicle_services_screen.dart';
 import 'package:chatbot/screens/notifications_screen.dart';
@@ -19,7 +23,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
@@ -52,18 +57,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       'description': 'إدارة جميع خدمات مركبتك',
     },
     {
-      'title': 'حساب رسوم الترخيص',
-      'screen': SpecialNeedsLicenseScreen(),
-      'icon': Icons.calculate,
+      'title': 'خدمة الاستعلامات',
+      'screen': TrafficQueriesScreen(),
+      'icon': Icons.search, // Changed icon to be more appropriate
       'color': Color(0xFF10B981),
-      'description': 'حساب رسوم ترخيص مركبتك',
+      'description': 'استعلام عن المخالفات والرخص', // Updated description
     },
     {
-      'title': 'المخالفات المرورية',
-      'screen': TrafficViolationsScreen(),
-      'icon': Icons.warning_rounded,
-      'color': Color(0xFFF59E0B),
-      'description': 'عرض وإدارة المخالفات',
+      'title': 'تقارير الحوادث',
+      'screen': AccidentReportsScreen(),
+      'icon': Icons.car_crash, // Changed icon
+      'color': Color(0xFFEF4444), // Changed color to red
+      'description': 'تسجيل وإدارة تقارير الحوادث', // Updated description
+    },
+    {
+      'title': 'خدمات المرور',
+      'screen': TrafficServicesScreen(),
+      'icon': Icons.traffic, // Changed icon
+      'color': Color(0xFFEF4444), // Changed color to red
+      'description': 'الخدمات الخاصة بادارة المرور', // Updated description
     },
     {
       'title': 'الضرائب السنوية',
@@ -71,13 +83,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       'icon': Icons.account_balance_wallet,
       'color': Color(0xFF8B5CF6),
       'description': 'حساب وعرض الضرائب',
-    },
-    {
-      'title': 'الخدمات الإلكترونية',
-      'screen': ElectronicServicesScreen(),
-      'icon': Icons.devices,
-      'color': Color(0xFFEC4899),
-      'description': 'خدمات رقمية متكاملة',
     },
     {
       'title': 'العقوبات',
@@ -92,13 +97,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       'icon': Icons.calendar_month,
       'color': Color(0xFF6366F1),
       'description': 'حجز موعد للخدمات',
-    },
-    {
-      'title': 'تراخيص خاصة',
-      'screen': SpecialNeedsLicenseScreen(),
-      'icon': Icons.accessible,
-      'color': Color(0xFF14B8A6),
-      'description': 'خدمات ذوي الاحتياجات',
     },
   ];
 
@@ -182,7 +180,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               children: [
                                 Text(
                                   'مرحباً بك',
-                                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -190,7 +191,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 SizedBox(height: 8),
                                 Text(
                                   'كيف يمكننا مساعدتك اليوم؟',
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
                                         color: Colors.white.withOpacity(0.9),
                                       ),
                                 ),
@@ -245,7 +249,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   children: [
                                     Text(
                                       'هل تحتاج إلى مساعدة؟',
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
                                             color: Color(0xFF1E293B),
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -253,7 +260,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     SizedBox(height: 4),
                                     Text(
                                       'تحدث مع المساعد الذكي',
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
                                             color: Color(0xFF64748B),
                                           ),
                                     ),
@@ -264,7 +274,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => ChatScreen2()),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ChatScreenWithGpt()),
                                   );
                                 },
                                 icon: Icon(
@@ -315,7 +327,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 Container(
                                   padding: EdgeInsets.all(16),
                                   decoration: BoxDecoration(
-                                    color: _menuItems[index]['color'].withOpacity(0.1),
+                                    color: _menuItems[index]['color']
+                                        .withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Icon(
@@ -329,7 +342,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   padding: EdgeInsets.symmetric(horizontal: 12),
                                   child: Text(
                                     _menuItems[index]['title'],
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(
                                           color: Color(0xFF1E293B),
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -343,7 +359,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   padding: EdgeInsets.symmetric(horizontal: 12),
                                   child: Text(
                                     _menuItems[index]['description'],
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
                                           color: Color(0xFF64748B),
                                         ),
                                     textAlign: TextAlign.center,
