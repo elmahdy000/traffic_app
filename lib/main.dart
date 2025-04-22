@@ -1,3 +1,5 @@
+import 'package:chatbot/screens/auth_screen.dart';
+import 'package:chatbot/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:chatbot/screens/home_screen.dart';
@@ -143,11 +145,16 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      routes: {
+        '/home': (context) => HomeScreen(),
+        '/login': (context) => AuthScreen(),
+        '/profile': (context) => ProfileScreen()
+      },
       home: Builder(
         builder: (context) {
           return Directionality(
             textDirection: TextDirection.rtl,
-            child: HomeScreen(),
+            child: AuthScreen(),
           );
         },
       ),

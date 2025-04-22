@@ -2,17 +2,17 @@ import 'package:chatbot/screens/accident_report.dart';
 import 'package:chatbot/screens/gpt_screen.dart';
 import 'package:chatbot/screens/traffic_queries.dart';
 import 'package:chatbot/screens/trafic_sercices.dart';
-import 'package:chatbot/services/chatgpt_service.dart';
+
 // Remove or comment out the conflicting import
 // import 'package:chatbot/screens/trafic_sercices.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/screens/chat_screen2.dart';
-import 'package:chatbot/screens/special_licence.dart';
+
 import 'package:chatbot/screens/booking_screen.dart';
 import 'package:chatbot/screens/penalities_screen.dart';
-import 'package:chatbot/screens/traffic_violation_screen.dart';
+
 import 'package:chatbot/screens/annual_tax_screen.dart';
-import 'package:chatbot/screens/licence_screen.dart';
+
 import 'package:chatbot/screens/vehicle_services_screen.dart';
 import 'package:chatbot/screens/notifications_screen.dart';
 import 'package:chatbot/screens/profile_screen.dart';

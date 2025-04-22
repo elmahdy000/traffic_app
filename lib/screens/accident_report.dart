@@ -3,7 +3,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AccidentReportsScreen extends StatefulWidget {

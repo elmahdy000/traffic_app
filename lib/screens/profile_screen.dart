@@ -753,7 +753,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               onTap: () {
-                                // Handle logout
+                                Navigator.pushReplacementNamed(
+                                    context, '/login');
                               },
                             ),
                           ],
